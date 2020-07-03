@@ -15,9 +15,32 @@ mpiMaster:
   nodeSelector: {}
   tolerations: []
   affinity: {}
+  volumes:
+    - name: nfs-neanias-mpi
+      persistentVolumeClaim:
+        claimName: nfs-neanias-mpi
+  volumeMounts:
+  - mountPath: /workspace
+    name: nfs-neanias-mpi
 
 mpiWorkers:
   num: 3
   nodeSelector: {}
   tolerations: []
   affinity: {}
+  volumes:
+    - name: nfs-neanias-mpi
+      persistentVolumeClaim:
+        claimName: nfs-neanias-mpi
+  volumeMounts:
+  - mountPath: /workspace
+    name: nfs-neanias-mpi
+
+PersistentVolumeClaim:
+  metadata:
+    name: scratch-claim
+  spec:
+    resources:
+        requests:
+            storage: 4Gi
+    storageClassName: hostpath
