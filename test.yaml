@@ -1,0 +1,386 @@
+---
+# Source: CAESAR-kube-openmpi/templates/secrets.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: caesar-openmpi-ssh-key
+  labels:
+    app: CAESAR-kube-openmpi
+    chart: CAESAR-kube-openmpi-0.1
+    release: caesar-openmpi
+    heritage: Helm
+type: Opaque
+data:
+  id_rsa: "LS0tLS1CRUdJTiBPUEVOU1NIIFBSSVZBVEUgS0VZLS0tLS0KYjNCbGJuTnphQzFyWlhrdGRqRUFBQUFBQkc1dmJtVUFBQUFFYm05dVpRQUFBQUFBQUFBQkFBQUJsd0FBQUFkemMyZ3RjbgpOaEFBQUFBd0VBQVFBQUFZRUFyTGExR3ZLZ0h2R3FxcXpUM2tJUlBUa1RDM0tzS1hSKzErTTRWRkV3M012ZkJEMy9BWkZPCkkvYXZsMWJscDZPM0J2VStyYTRqeFVRLytGTFRVZ2JIblRpdmN6SVZLbFE5N3hnc0Yvc1JSTTJXMG1xQ1VNTCtOZjN1Z0sKVy9mcWEyb3pyZE85UktQUGFDM3ljdEpNTFdDMy9HSDNSbXEzUFlPN0t1eHIyNEQ3MEpIWE1PMnJOSHgvRGlYTjNXaWNnMgpMMWhwaGpHSHV3ZGVXeWphdXczdUs0Mzk0cWtaUzRIb1lmUnZHaElYTWpCelBLREwwSjlMMmZDb3R1UUxkSzVPRTNhRDFwClhRR0I0MVRjTGNuUkNBVWxCYXhIN3Uwc2k2M1llZUQ0TWhwYkwyTklZdVA0TXZOcFlsSUNsbkhwdm9BVDM0UWJKUDVYVEMKOFhaQ3dtZDNlN0ZlS3N4c01sUmJpZk40NWtSL2ZoYkhGTGRVOERpeHdVS3ZEb1pydGRYY0JzNENrQzJYZ1hncXM5NXpGWgowT3lnWlltaWZkZUZGU2IxRzFiWjZjcjMxTDRoUVY1cmFVTTA1RmVaaFVTNmVoNHJNWExNcFJrckRiWjhpaGFOM2M4UGUwCmZrNXY0UlRZSzNZazgzR3BJQ0pqR3pzbUxGR2pTZmZKclorcXd6Y3pBQUFGbUZjWGwrZFhGNWZuQUFBQUIzTnphQzF5YzIKRUFBQUdCQUt5MnRScnlvQjd4cXFxczA5NUNFVDA1RXd0eXJDbDBmdGZqT0ZSUk1Oekwzd1E5L3dHUlRpUDJyNWRXNWFlagp0d2IxUHEydUk4VkVQL2hTMDFJR3g1MDRyM015RlNwVVBlOFlMQmY3RVVUTmx0SnFnbERDL2pYOTdvQ2x2MzZtdHFNNjNUCnZVU2p6Mmd0OG5MU1RDMWd0L3hoOTBacXR6MkR1eXJzYTl1QSs5Q1IxekR0cXpSOGZ3NGx6ZDFvbklOaTlZYVlZeGg3c0gKWGxzbzJyc043aXVOL2VLcEdVdUI2R0gwYnhvU0Z6SXdjenlneTlDZlM5bndxTGJrQzNTdVRoTjJnOWFWMEJnZU5VM0MzSgowUWdGSlFXc1IrN3RMSXV0MkhuZytESWFXeTlqU0dMaitETHphV0pTQXBaeDZiNkFFOStFR3lUK1Ywd3ZGMlFzSm5kM3V4Clhpck1iREpVVzRuemVPWkVmMzRXeHhTM1ZQQTRzY0ZDcnc2R2E3WFYzQWJPQXBBdGw0RjRLclBlY3hXZERzb0dXSm9uM1gKaFJVbTlSdFcyZW5LOTlTK0lVRmVhMmxETk9SWG1ZVkV1bm9lS3pGeXpLVVpLdzIyZklvV2pkM1BEM3RINU9iK0VVMkN0MgpKUE54cVNBaVl4czdKaXhSbzBuM3lhMmZxc00zTXdBQUFBTUJBQUVBQUFHQkFKK1EzWmxiOTFzZll0SDBnbm1oQ0ZSTDJyCkNFN1ZJUGN2RDUyQnp1TmZxSDBDOFhKL1hHelM2a3htMUh0ejArSCthcHhaS29oQnZJaG1GaUJDS1FhUE4wWDRSS0RRdmkKY0tYbzZ6UHNuWE8zalZReFd0eEtpcHBQVkg0K284RGJQWGxvOU9SRnFhRFJEdkFrUGF6czVOd1MzSFJMRWwvczB5VzBXNAp6NTBvZVgya2YrK1FaTkJGQlEySkY3MHEzUTcxNm1qRGVTb3hmRUl3U05waWVUSXl2U0wzR3RVTlZWMitCRCtERlo3VnhOCkx1b2dsS3pWdnpwSEFWaVhMNDVKU2d4YllwNTBMVEw5eHVEUzZoV3FwTzZUR3VscW84NHhjT1hnYUdOZVUxN3NyZ21wK0UKVXRIMFBGM3ltZzEvUkY4WjBBZEN2bGZTTklnMXY5MU5PUWw4MHVYdHExU08xNG5DdWRoK1I5dDR5eEZySWtLNkdEdWZVUwpydXFtSGFOTHA4dG9VbVNhOC9jRjFFZGdQODUxWTFNV2lqMjJ4MmZwb1BMSndQelNOMVZMd1FHaERldHVZd29Ick1sdFh5CmY0UmhaOXNwOFk4bWhWTlFmeFhWaVRQMnpSL2dOdVdvVWNKR0MrNTEyZVk3bmhRNFJVRTlLWkhOUWZCVFJGMU80UzRRQUEKQU1BeXdZMEVZWHRnVzArYjB3K3JaQVhURUo2UWl0YzdCaWVtd3JvcW5OTm5HajFiK1NhdkV4Wnp2SUlvbEwvYWcxeFAwbApXRnNmN1BzOUJDVWdXOFY4Z2ZlUXRMcTI2ZmsyRDYySFZvQ0FVWlM4RlJsRVY5bXprWG54ZFNrT29sREZSTVVreHBSWmxPCnN4SjVlelEzdVFTNjlTeHo4VEUyVGJiZUN5VDR4ZXEwQk9KV1dRRmEyYWg5TFNKNTBwWDhibElsL052aFlGL3FacUV1T1IKQ0RsRGhBY0plVitEQ3p0NFduYitjSUVhWkRzMEtpbmlDbjNzSFJzOHUzRXR3SVhWOEFBQURCQU5RMkpsaExpV2NrUXE3WgpIVHJ1R3A3dFgwZ3gza0pmZVVFQ2RzQTVxcWMyN3c4M1Z2OUxGZ2ZWRXpNeG41THZJS1hMb2pxUGdUMWRHdDRLeGJPekVqCklBczlqRkg4RnF3a0N4bWtJYWFseEZlVEFPNmVmNWJOQXMzMFgrS1haZjFEd1N3WGV0V1hLOWNlUWp0eHZsN0N4ZXV0UkgKZ0VoSFdscEdadEJEY1pqcjFCZkdxYlhwa1pxdGJyRzJxdG1wWEFxbjZSc3BWSTBvWnVDQ1B2RmZuTUJpYjY0VXFYN28vbQowQTFqUTBnanhwYTgvZER4bXp0bXJUNFh0M1V1aGI5UUFBQU1FQTBGb2dkMkROL2hFR1phUUtSS0xyUktVNG52Ym9wZFZwCjVpOGxPdjl0dERrSTNHSHRNSWtmZEFubUFieHRpTDIzZjM2a3ByWmxTbEw5ZzZDVzRHQkxRS0lFNmg2TjdpeTNZNURFWnUKSjU0b00wME03SXphSFYramNQbzE4dGhrUllvdDV3NHJzNjBhYmV0T00xYVJnVjJGbGY5VEZFYXJQM2hiZi9uN0dCSTdaKwo5SVlEUStrS1JjZms3bi8xSjlHWldEMHptSVc4aDZ5T2xkT0M4bWlXRWRTcElXdHJ3TldralNVeHJEamVFSUI1TEdMWGdWCjcyck8yMjk2M2t6VFdIQUFBQUgydDViR1V1YW05eVpHRmhia0JMZVd4bExVcHZjbVJoWVc0dWJHOWpZV3dCQWdNPQotLS0tLUVORCBPUEVOU1NIIFBSSVZBVEUgS0VZLS0tLS0K"
+
+  id_rsa.pub: "c3NoLXJzYSBBQUFBQjNOemFDMXljMkVBQUFBREFRQUJBQUFCZ1FDc3RyVWE4cUFlOGFxcXJOUGVRaEU5T1JNTGNxd3BkSDdYNHpoVVVURGN5OThFUGY4QmtVNGo5cStYVnVXbm83Y0c5VDZ0cmlQRlJELzRVdE5TQnNlZE9LOXpNaFVxVkQzdkdDd1greEZFelpiU2FvSlF3djQxL2U2QXBiOStwcmFqT3QwNzFFbzg5b0xmSnkwa3d0WUxmOFlmZEdhcmM5ZzdzcTdHdmJnUHZRa2RjdzdhczBmSDhPSmMzZGFKeURZdldHbUdNWWU3QjE1YktOcTdEZTRyamYzaXFSbExnZWhoOUc4YUVoY3lNSE04b012UW4wdlo4S2kyNUF0MHJrNFRkb1BXbGRBWUhqVk53dHlkRUlCU1VGckVmdTdTeUxyZGg1NFBneUdsc3ZZMGhpNC9neTgybGlVZ0tXY2VtK2dCUGZoQnNrL2xkTUx4ZGtMQ1ozZDdzVjRxekd3eVZGdUo4M2ptUkg5K0ZzY1V0MVR3T0xIQlFxOE9obXUxMWR3R3pnS1FMWmVCZUNxejNuTVZuUTdLQmxpYUo5MTRVVkp2VWJWdG5weXZmVXZpRkJYbXRwUXpUa1Y1bUZSTHA2SGlzeGNzeWxHU3NOdG55S0ZvM2R6dzk3UitUbS9oRk5ncmRpVHpjYWtnSW1NYk95WXNVYU5KOThtdG42ckROek09IGt5bGUuam9yZGFhbkBLeWxlLUpvcmRhYW4ubG9jYWwK"
+
+  authorized_keys: "c3NoLXJzYSBBQUFBQjNOemFDMXljMkVBQUFBREFRQUJBQUFCZ1FDc3RyVWE4cUFlOGFxcXJOUGVRaEU5T1JNTGNxd3BkSDdYNHpoVVVURGN5OThFUGY4QmtVNGo5cStYVnVXbm83Y0c5VDZ0cmlQRlJELzRVdE5TQnNlZE9LOXpNaFVxVkQzdkdDd1greEZFelpiU2FvSlF3djQxL2U2QXBiOStwcmFqT3QwNzFFbzg5b0xmSnkwa3d0WUxmOFlmZEdhcmM5ZzdzcTdHdmJnUHZRa2RjdzdhczBmSDhPSmMzZGFKeURZdldHbUdNWWU3QjE1YktOcTdEZTRyamYzaXFSbExnZWhoOUc4YUVoY3lNSE04b012UW4wdlo4S2kyNUF0MHJrNFRkb1BXbGRBWUhqVk53dHlkRUlCU1VGckVmdTdTeUxyZGg1NFBneUdsc3ZZMGhpNC9neTgybGlVZ0tXY2VtK2dCUGZoQnNrL2xkTUx4ZGtMQ1ozZDdzVjRxekd3eVZGdUo4M2ptUkg5K0ZzY1V0MVR3T0xIQlFxOE9obXUxMWR3R3pnS1FMWmVCZUNxejNuTVZuUTdLQmxpYUo5MTRVVkp2VWJWdG5weXZmVXZpRkJYbXRwUXpUa1Y1bUZSTHA2SGlzeGNzeWxHU3NOdG55S0ZvM2R6dzk3UitUbS9oRk5ncmRpVHpjYWtnSW1NYk95WXNVYU5KOThtdG42ckROek09IGt5bGUuam9yZGFhbkBLeWxlLUpvcmRhYW4ubG9jYWwK"
+---
+# Source: CAESAR-kube-openmpi/templates/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: caesar-openmpi-assets
+  labels:
+    app: CAESAR-kube-openmpi
+    chart: CAESAR-kube-openmpi-0.1
+    release: caesar-openmpi
+    heritage: Helm
+data:
+  gen_hostfile.sh: |
+    set -xev
+
+    target=$1
+    max_try=$2
+
+    trap "rm -f ${target}_new" EXIT TERM INT KILL
+
+    cluster_size=$(kubectl -n g-3538638-myuwcacza get statefulsets caesar-openmpi-worker -o jsonpath='{.status.replicas}')
+
+    tried=0
+    until [ "$(wc -l < ${target}_new)" -eq $cluster_size ]; do
+      pod_names=$(kubectl -n g-3538638-myuwcacza get pod \
+        --selector=app=CAESAR-kube-openmpi,chart=CAESAR-kube-openmpi-0.1,release=caesar-openmpi,role=worker \
+        --field-selector=status.phase=Running \
+        -o=jsonpath='{.items[*].metadata.name}')
+
+      rm -f ${target}_new
+      for p in ${pod_names}; do
+        echo "${p}.caesar-openmpi" >> ${target}_new
+      done
+
+      tried=$(expr $tried + 1)
+      if [ -n "$max_try" ] && [ $max_try -ge $tried ]; then
+        break
+      fi
+    done
+
+    sed -i "1icaesar-openmpi-master.caesar-openmpi" ${target}_new
+
+    if [ -e ${target}_new ]; then
+      mv ${target}_new ${target}
+    fi
+
+
+  hostfile_update_every: "15"
+---
+# Source: CAESAR-kube-openmpi/templates/redis-cluster.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-master
+  labels:
+    app: redis
+    role: master
+    tier: backend
+spec:
+  ports:
+  - port: 6379
+    targetPort: 6379
+  selector:
+    app: redis
+    role: master
+    tier: backend
+---
+# Source: CAESAR-kube-openmpi/templates/redis-cluster.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-slave
+  labels:
+    app: redis
+    role: slave
+    tier: backend
+spec:
+  ports:
+  - port: 6379
+  selector:
+    app: redis
+    role: slave
+    tier: backend
+---
+# Source: CAESAR-kube-openmpi/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: caesar-openmpi
+  labels:
+    app: CAESAR-kube-openmpi
+    chart: CAESAR-kube-openmpi-0.1
+    release: caesar-openmpi
+    heritage: Helm
+spec:
+  selector:
+    app: CAESAR-kube-openmpi
+    release: caesar-openmpi
+  clusterIP: None
+  ports:
+  - name: dummy # Actually, no port is needed.
+    port: 1234
+    targetPort: 1234
+---
+# Source: CAESAR-kube-openmpi/templates/mpi-cluster.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: caesar-openmpi-master
+  labels:
+    app: CAESAR-kube-openmpi
+    chart: CAESAR-kube-openmpi-0.1
+    release: caesar-openmpi
+    heritage: Helm
+    role: master
+    
+spec:
+  restartPolicy: OnFailure
+  hostname: caesar-openmpi-master
+  subdomain: caesar-openmpi
+  securityContext:
+        null
+  volumes:
+  - name: kube-openmpi-guillotine
+    emptyDir: {}
+  - name: kube-openmpi-hostfile-dir
+    emptyDir: {}
+
+  - name: kube-openmpi-hostfile-updater-params
+    configMap:
+      name: caesar-openmpi-assets
+      items:
+      - key: hostfile_update_every
+        path: update_every
+
+  - name: kube-openmpi-utils
+    configMap:
+      name: caesar-openmpi-assets
+      items:
+      - key: gen_hostfile.sh
+        path: gen_hostfile.sh
+        mode: 365
+  - name: kube-openmpi-ssh-key
+    secret:
+      secretName: caesar-openmpi-ssh-key
+      defaultMode: 256
+
+  - name: nfs-neanias-mpi
+    persistentVolumeClaim:
+      claimName: nfs-neanias-mpi
+
+  initContainers:
+  - name: hostfile-initializer
+    image: everpeace/kubectl:1.9.2
+    imagePullPolicy: IfNotPresent
+    command:
+      - sh
+      - -c
+      - |
+        /kube-openmpi/utils/gen_hostfile.sh $HOSTFILE_DIR/hostfile
+    env:
+    - name: HOSTFILE_DIR
+      value: /kube-openmpi/generated
+    volumeMounts:
+    - name: kube-openmpi-hostfile-dir
+      mountPath: /kube-openmpi/generated
+    - name: kube-openmpi-utils
+      mountPath: /kube-openmpi/utils
+  containers:
+  - name: mpi-master
+    image: "jordaan0/caesar_openmpi:latest"
+    imagePullPolicy: IfNotPresent
+    ports:
+    - containerPort: 2022
+    env:
+    - name: HOSTFILE
+      value: /kube-openmpi/generated/hostfile
+    - name: GUILLOTINE
+      value: /kube-openmpi/guillotine
+    volumeMounts:
+    - name: kube-openmpi-guillotine
+      mountPath: /kube-openmpi/guillotine
+    - name: kube-openmpi-ssh-key
+      mountPath: /ssh-key/openmpi
+    - name: kube-openmpi-hostfile-dir
+      mountPath: /kube-openmpi/generated/
+    - name: kube-openmpi-utils
+      mountPath: /kube-openmpi/utils
+
+    - mountPath: /workspace
+      name: nfs-neanias-mpi
+
+    resources:
+          null
+
+
+  - name: hostfile-updater
+    image: everpeace/kubectl:1.9.2
+    imagePullPolicy: IfNotPresent
+    command:
+    - sh
+    - -c
+    - |
+      while [ ! -e $GUILLOTINE/execute ];
+      do
+        /kube-openmpi/utils/gen_hostfile.sh $HOSTFILE_DIR/hostfile 1
+        if [ -e /kube-openmpi/hostfile-updater-params/update_every ]; then
+          SLEEP=$(cat /kube-openmpi/hostfile-updater-params/update_every)
+        fi
+        sleep ${SLEEP:-15}
+      done
+      echo Done.
+    env:
+    - name: HOSTFILE_DIR
+      value: /kube-openmpi/generated
+    - name: GUILLOTINE
+      value: /kube-openmpi/guillotine
+    volumeMounts:
+    - name: kube-openmpi-hostfile-dir
+      mountPath: /kube-openmpi/generated
+    - name: kube-openmpi-guillotine
+      mountPath: /kube-openmpi/guillotine
+    - name: kube-openmpi-utils
+      mountPath: /kube-openmpi/utils
+    - name: kube-openmpi-hostfile-updater-params
+      mountPath: /kube-openmpi/hostfile-updater-params
+---
+# Source: CAESAR-kube-openmpi/templates/redis-cluster.yaml
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: redis-master
+  labels:
+    app: redis
+spec:
+  selector:
+    matchLabels:
+      app: redis
+      role: master
+      tier: backend
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: redis
+        role: master
+        tier: backend
+    spec:
+      containers:
+      - name: master
+        image: k8s.gcr.io/redis:e2e  # or just image: redis
+        resources: 
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        ports:
+        - containerPort: 6379
+---
+# Source: CAESAR-kube-openmpi/templates/redis-cluster.yaml
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: redis-slave
+  labels:
+    app: redis
+spec:
+  selector:
+    matchLabels:
+      app: redis
+      role: slave
+      tier: backend
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: redis
+        role: slave
+        tier: backend
+    spec:
+      containers:
+      - name: slave
+        image: gcr.io/google_samples/gb-redisslave:v3
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        env:
+        - name: GET_HOSTS_FROM
+          value: dns
+          # Using `GET_HOSTS_FROM=dns` requires your cluster to
+          # provide a dns service. As of Kubernetes 1.3, DNS is a built-in
+          # service launched automatically. However, if the cluster you are using
+          # does not have a built-in DNS service, you can instead
+          # access an environment variable to find the master
+          # service's host. To do so, comment out the 'value: dns' line above, and
+          # uncomment the line below:
+          # value: env
+        ports:
+        - containerPort: 6379
+---
+# Source: CAESAR-kube-openmpi/templates/mpi-cluster.yaml
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: caesar-openmpi-worker
+  labels:
+    app: CAESAR-kube-openmpi
+    chart: CAESAR-kube-openmpi-0.1
+    release: caesar-openmpi
+    heritage: Helm
+    role: worker
+spec:
+  selector:
+    matchLabels:
+      app: CAESAR-kube-openmpi
+      chart: CAESAR-kube-openmpi-0.1
+      release: caesar-openmpi
+      heritage: Helm
+      role: worker
+  serviceName: caesar-openmpi
+  podManagementPolicy: Parallel
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: CAESAR-kube-openmpi
+        chart: CAESAR-kube-openmpi-0.1
+        release: caesar-openmpi
+        heritage: Helm
+        role: worker
+    spec:
+      securityContext:
+        null
+      volumes:
+      - name: kube-openmpi-ssh-key
+        secret:
+          secretName: caesar-openmpi-ssh-key
+          defaultMode: 256
+      - name: kube-openmpi-utils
+        configMap:
+          name: caesar-openmpi-assets
+          items:
+          - key: gen_hostfile.sh
+            path: gen_hostfile.sh
+            mode: 365
+
+      - name: nfs-neanias-mpi
+        persistentVolumeClaim:
+          claimName: nfs-neanias-mpi
+
+      initContainers:
+      containers:
+      - name: mpi-worker
+        image: "jordaan0/caesar_openmpi:latest"
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 2022
+        volumeMounts:
+        - name: kube-openmpi-ssh-key
+          mountPath: /ssh-key/openmpi
+        - name: kube-openmpi-utils
+          mountPath: /kube-openmpi/utils
+
+        - mountPath: /workspace
+          name: nfs-neanias-mpi
+
+        resources:
+          null

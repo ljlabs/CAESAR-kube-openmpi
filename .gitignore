@@ -1,1 +1,4 @@
 envs.sh
+scratch/
+.ssh/
+ssh-key.yaml
