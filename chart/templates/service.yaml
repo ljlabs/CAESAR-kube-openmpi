@@ -11,11 +11,10 @@ spec:
   selector:
     app: {{ template "..name" . }}
     release: {{ .Release.Name }}
-  clusterIP: None
   ports:
-  - name: dummy # Actually, no port is needed.
-    port: 1234
-    targetPort: 1234
+  - name: api
+    port: 8080
+    targetPort: 8080
 
 {{- if .Values.sshGateway.enabled }}
 ---

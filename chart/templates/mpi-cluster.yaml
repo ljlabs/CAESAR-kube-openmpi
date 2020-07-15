@@ -117,6 +117,7 @@ spec:
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         ports:
         - containerPort: 2022
+          containerPort: 8080
         volumeMounts:
         - name: kube-openmpi-ssh-key
           mountPath: /ssh-key/openmpi
@@ -261,6 +262,7 @@ spec:
     imagePullPolicy: {{ .Values.image.pullPolicy }}
     ports:
     - containerPort: 2022
+      containerPort: 8080
     env:
     - name: HOSTFILE
       value: /kube-openmpi/generated/hostfile

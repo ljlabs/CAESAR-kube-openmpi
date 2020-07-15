@@ -1,6 +1,6 @@
 image:
-  repository: jordaan0/caesar_openmpi
-  tag: latest
+  repository: jordaan0/caesar-rest
+  tag: version-0.0.9
 
 networkPolicy:
   enabled: false
@@ -22,9 +22,14 @@ mpiMaster:
   volumeMounts:
   - mountPath: /workspace
     name: nfs-neanias-mpi
+  resources:
+    limits:
+      cpu: "0.5"
+    requests:
+      cpu: "0.5"
 
 mpiWorkers:
-  num: 3
+  num: 1
   nodeSelector: {}
   tolerations: []
   affinity: {}
@@ -35,6 +40,11 @@ mpiWorkers:
   volumeMounts:
   - mountPath: /workspace
     name: nfs-neanias-mpi
+  resources:
+    limits:
+      cpu: "0.5"
+    requests:
+      cpu: "0.5"
   
 redisMaster:
   spec:
@@ -50,7 +60,7 @@ redisMaster:
 
 redisSlave:
   spec:
-    replicas: 2
+    replicas: 1
     template:
       spec: 
         containers:
