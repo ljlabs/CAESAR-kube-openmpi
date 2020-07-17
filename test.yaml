@@ -121,132 +121,140 @@ spec:
     port: 8080
     targetPort: 8080
 ---
-# Source: CAESAR-kube-openmpi/templates/mpi-cluster.yaml
-apiVersion: v1
-kind: Pod
+# Source: CAESAR-kube-openmpi/templates/mpi-master.yml
+apiVersion: apps/v1
+kind: Deployment
 metadata:
   name: caesar-openmpi-master
   labels:
     app: CAESAR-kube-openmpi
-    chart: CAESAR-kube-openmpi-0.1
-    release: caesar-openmpi
-    heritage: Helm
-    role: master
-    
 spec:
-  restartPolicy: OnFailure
-  hostname: caesar-openmpi-master
-  subdomain: caesar-openmpi
-  securityContext:
-        null
-  volumes:
-  - name: kube-openmpi-guillotine
-    emptyDir: {}
-  - name: kube-openmpi-hostfile-dir
-    emptyDir: {}
+  replicas: 1
+  selector:
+    matchLabels:
+      app: CAESAR-kube-openmpi
+  template:
+    metadata:
+      labels:
+        app: CAESAR-kube-openmpi
+        chart: CAESAR-kube-openmpi-0.1
+        release: caesar-openmpi
+        heritage: Helm
+        role: master
+        
+    spec:
+      restartPolicy: OnFailure
+      hostname: caesar-openmpi-master
+      subdomain: caesar-openmpi
+      securityContext:
+          null
+      volumes:
+      - name: kube-openmpi-guillotine
+        emptyDir: {}
+      - name: kube-openmpi-hostfile-dir
+        emptyDir: {}
 
-  - name: kube-openmpi-hostfile-updater-params
-    configMap:
-      name: caesar-openmpi-assets
-      items:
-      - key: hostfile_update_every
-        path: update_every
+      - name: kube-openmpi-hostfile-updater-params
+        configMap:
+          name: caesar-openmpi-assets
+          items:
+          - key: hostfile_update_every
+            path: update_every
 
-  - name: kube-openmpi-utils
-    configMap:
-      name: caesar-openmpi-assets
-      items:
-      - key: gen_hostfile.sh
-        path: gen_hostfile.sh
-        mode: 365
-  - name: kube-openmpi-ssh-key
-    secret:
-      secretName: caesar-openmpi-ssh-key
-      defaultMode: 256
+      - name: kube-openmpi-utils
+        configMap:
+          name: caesar-openmpi-assets
+          items:
+          - key: gen_hostfile.sh
+            path: gen_hostfile.sh
+            mode: 365
+      - name: kube-openmpi-ssh-key
+        secret:
+          secretName: caesar-openmpi-ssh-key
+          defaultMode: 256
+  
+      - name: nfs-neanias-mpi
+      persistentVolumeClaim:
+        claimName: nfs-neanias-mpi
+  
+      initContainers:
+      - name: hostfile-initializer
+        image: everpeace/kubectl:1.9.2
+        imagePullPolicy: IfNotPresent
+        command:
+          - sh
+          - -c
+          - |
+            /kube-openmpi/utils/gen_hostfile.sh $HOSTFILE_DIR/hostfile
+        env:
+        - name: HOSTFILE_DIR
+          value: /kube-openmpi/generated
+        volumeMounts:
+        - name: kube-openmpi-hostfile-dir
+          mountPath: /kube-openmpi/generated
+        - name: kube-openmpi-utils
+          mountPath: /kube-openmpi/utils
+      containers:
+      - name: mpi-master
+        image: "jordaan0/caesar-rest:version-0.0.9"
+        ports:
+        - containerPort: 2022
+          containerPort: 8080
+        env:
+        - name: HOSTFILE
+          value: /kube-openmpi/generated/hostfile
+        - name: GUILLOTINE
+          value: /kube-openmpi/guillotine
+        volumeMounts:
+        - name: kube-openmpi-guillotine
+          mountPath: /kube-openmpi/guillotine
+        - name: kube-openmpi-ssh-key
+          mountPath: /ssh-key/openmpi
+        - name: kube-openmpi-hostfile-dir
+          mountPath: /kube-openmpi/generated/
+        - name: kube-openmpi-utils
+          mountPath: /kube-openmpi/utils
 
-  - name: nfs-neanias-mpi
-    persistentVolumeClaim:
-      claimName: nfs-neanias-mpi
+      - mountPath: /workspace
+        name: nfs-neanias-mpi
 
-  initContainers:
-  - name: hostfile-initializer
-    image: everpeace/kubectl:1.9.2
-    imagePullPolicy: IfNotPresent
-    command:
-      - sh
-      - -c
-      - |
-        /kube-openmpi/utils/gen_hostfile.sh $HOSTFILE_DIR/hostfile
-    env:
-    - name: HOSTFILE_DIR
-      value: /kube-openmpi/generated
-    volumeMounts:
-    - name: kube-openmpi-hostfile-dir
-      mountPath: /kube-openmpi/generated
-    - name: kube-openmpi-utils
-      mountPath: /kube-openmpi/utils
-  containers:
-  - name: mpi-master
-    image: "jordaan0/caesar-rest:version-0.0.9"
-    imagePullPolicy: IfNotPresent
-    ports:
-    - containerPort: 2022
-      containerPort: 8080
-    env:
-    - name: HOSTFILE
-      value: /kube-openmpi/generated/hostfile
-    - name: GUILLOTINE
-      value: /kube-openmpi/guillotine
-    volumeMounts:
-    - name: kube-openmpi-guillotine
-      mountPath: /kube-openmpi/guillotine
-    - name: kube-openmpi-ssh-key
-      mountPath: /ssh-key/openmpi
-    - name: kube-openmpi-hostfile-dir
-      mountPath: /kube-openmpi/generated/
-    - name: kube-openmpi-utils
-      mountPath: /kube-openmpi/utils
-
-    - mountPath: /workspace
-      name: nfs-neanias-mpi
-
-    resources:
-          limits:
-            cpu: "0.5"
-          requests:
-            cpu: "0.5"
+        resources:
+            limits:
+              cpu: "0.5"
+            requests:
+              cpu: "0.5"
 
 
-  - name: hostfile-updater
-    image: everpeace/kubectl:1.9.2
-    imagePullPolicy: IfNotPresent
-    command:
-    - sh
-    - -c
-    - |
-      while [ ! -e $GUILLOTINE/execute ];
-      do
-        /kube-openmpi/utils/gen_hostfile.sh $HOSTFILE_DIR/hostfile 1
-        if [ -e /kube-openmpi/hostfile-updater-params/update_every ]; then
-          SLEEP=$(cat /kube-openmpi/hostfile-updater-params/update_every)
-        fi
-        sleep ${SLEEP:-15}
-      done
-      echo Done.
-    env:
-    - name: HOSTFILE_DIR
-      value: /kube-openmpi/generated
-    - name: GUILLOTINE
-      value: /kube-openmpi/guillotine
-    volumeMounts:
-    - name: kube-openmpi-hostfile-dir
-      mountPath: /kube-openmpi/generated
-    - name: kube-openmpi-guillotine
-      mountPath: /kube-openmpi/guillotine
-    - name: kube-openmpi-utils
-      mountPath: /kube-openmpi/utils
-    - name: kube-openmpi-hostfile-updater-params
-      mountPath: /kube-openmpi/hostfile-updater-params
+      - name: hostfile-updater
+        image: everpeace/kubectl:1.9.2
+        imagePullPolicy: IfNotPresent
+        command:
+        - sh
+        - -c
+        - |
+          while [ ! -e $GUILLOTINE/execute ];
+          do
+            /kube-openmpi/utils/gen_hostfile.sh $HOSTFILE_DIR/hostfile 1
+            if [ -e /kube-openmpi/hostfile-updater-params/update_every ]; then
+              SLEEP=$(cat /kube-openmpi/hostfile-updater-params/update_every)
+            fi
+            sleep ${SLEEP:-15}
+          done
+          echo Done.
+        env:
+        - name: HOSTFILE_DIR
+          value: /kube-openmpi/generated
+        - name: GUILLOTINE
+          value: /kube-openmpi/guillotine
+        volumeMounts:
+        - name: kube-openmpi-hostfile-dir
+          mountPath: /kube-openmpi/generated
+        - name: kube-openmpi-guillotine
+          mountPath: /kube-openmpi/guillotine
+        - name: kube-openmpi-utils
+          mountPath: /kube-openmpi/utils
+        - name: kube-openmpi-hostfile-updater-params
+          mountPath: /kube-openmpi/hostfile-updater-params
 ---
 # Source: CAESAR-kube-openmpi/templates/redis-cluster.yaml
 apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
