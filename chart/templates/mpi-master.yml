@@ -19,7 +19,6 @@ spec:
         role: master
         {{if .Values.networkPolicy.enabled }}allow_from_external: "true"{{ end }}
     spec:
-      restartPolicy: OnFailure
       hostname: {{ .Release.Name }}-master
       subdomain: {{ .Release.Name }}
 {{- if .Values.mpiMaster.customScheduling.enabled }}
@@ -65,9 +64,9 @@ spec:
           defaultMode: 256
         {{- end }}
       {{- end }}
-  {{ if .Values.mpiMaster.volumes }}
-  {{ toYaml .Values.mpiMaster.volumes | indent 4 }}
-  {{ end }}
+{{ if .Values.mpiMaster.volumes }}
+{{ toYaml .Values.mpiMaster.volumes | indent 6 }}
+{{ end }}
       initContainers:
       {{- $root := . }}
       {{- range .Values.appCodesToSync }}
@@ -117,6 +116,10 @@ spec:
           mountPath: /kube-openmpi/generated
         - name: kube-openmpi-utils
           mountPath: /kube-openmpi/utils
+{{ if .Values.mpiMaster.resources  }}
+        resources:
+{{ toYaml .Values.mpiMaster.resources | indent 10 }}
+{{ end }}
       containers:
       - name: mpi-master
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -151,10 +154,12 @@ spec:
           {{ if .subPath }}subPath: {{.subPath}} {{ end }}
         {{- end }}
 {{ if .Values.mpiMaster.volumeMounts  }}
-{{ toYaml .Values.mpiMaster.volumeMounts | indent 6 }}
+{{ toYaml .Values.mpiMaster.volumeMounts | indent 8 }}
 {{ end }}
+{{ if .Values.mpiMaster.resources  }}
         resources:
-{{ toYaml .Values.mpiMaster.resources | indent 12 }}
+{{ toYaml .Values.mpiMaster.resources | indent 10 }}
+{{ end }}
 {{ if .Values.mpiMaster.oneShot.enabled }}
 {{ if .Values.mpiMaster.oneShot.autoScaleDownWorkers }}
       - name: worker-auto-downing

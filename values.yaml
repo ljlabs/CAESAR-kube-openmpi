@@ -24,9 +24,11 @@ mpiMaster:
     name: nfs-neanias-mpi
   resources:
     limits:
-      cpu: "0.5"
+      cpu: "4"
+      memory: "1Gi"
     requests:
-      cpu: "0.5"
+      cpu: "2"
+      memory: "1Gi"
 
 mpiWorkers:
   num: 1

@@ -2,3 +2,6 @@ envs.sh
 scratch/
 .ssh/
 ssh-key.yaml
+test.yaml
+.ssh/id_rsa
+.ssh/id_rsa.pub
