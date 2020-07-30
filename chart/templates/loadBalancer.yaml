@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: caesar-openmpi-exposed
+  name: {{ .Release.Name }}-exposed
 spec:
   selector:
     app: {{ template "..name" . }}

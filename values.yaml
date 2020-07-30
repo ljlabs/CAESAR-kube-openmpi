@@ -1,6 +1,6 @@
 image:
   repository: jordaan0/caesar-rest
-  tag: version-0.0.9
+  tag: version-0.0.12
 
 networkPolicy:
   enabled: false
@@ -23,9 +23,6 @@ mpiMaster:
   - mountPath: /workspace
     name: nfs-neanias-mpi
   resources:
-    limits:
-      cpu: "4"
-      memory: "1Gi"
     requests:
       cpu: "2"
       memory: "1Gi"
@@ -44,7 +41,7 @@ mpiWorkers:
     name: nfs-neanias-mpi
   resources:
     requests:
-      cpu: "0.5"
+      cpu: "2"
   
 redisMaster:
   spec:
